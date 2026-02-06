@@ -37,6 +37,6 @@ const answer = document.getElementById('answer');
 ask.addEventListener('click', () => {
   eight.style.display = 'none';
   answer.style.display = 'block';
-  answer.textContent = fortunes[Math.floor(Math.random()*fortunes.length-1)];
+  answer.textContent = fortunes[Math.floor(Math.random()*fortunes.length)];
 
 })
