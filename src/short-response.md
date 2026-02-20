@@ -37,6 +37,8 @@ But an error is thrown.
 
 **Your Answer:**
 
+The specific error is a `TypeError`. This occurs because the script is loaded in the `<head>` before the **DOM** has finished loading, so `document.querySelector('#my-button')` `returns` `null`. The fix is to either move the `<script>` tag to the bottom of the `<body>`.
+
 ## Question 2: event.target vs event.currentTarget
 
 Consider this HTML:
@@ -60,6 +62,8 @@ div.addEventListener('click', (event) => {
 When a user clicks the button, both `event.target` and `event.currentTarget` are logged. Explain what each property represents in this scenario and why they might be different.
 
 **Your Answer:**
+
+`event.target` refers to the actual element that was clicked, which in this case is the `<button>`. `event.currentTarget` refers to the element that the **event listener** is attached to, which is the `<div id="button-container">`. They are different because the **click event** **bubbles** from the `button` up to the `div`, triggering the `div’s` **event listener**. This demonstrates **event bubbling** in the **DOM**.
 
 ## Question 3: Creating Elements Dynamically
 
@@ -96,6 +100,7 @@ However, when the page loads and the code is executed, the user isn't able to se
 
 **Your Answer:**
 
+The issue is that the created elements are never appended to the `productCard` `div`. Although `productCard` is added to the **DOM**, it is empty, so nothing is displayed. The fix is to append `productImage`, `productName`, and `productPrice` to `productCard` before appending `productCard` to `document.body`. Without this, the elements exist in memory but are not part of the **DOM**.
 
 ## Question 4: Event Delegation and event.target.closest()
 
@@ -136,6 +141,10 @@ todoList.addEventListener('click', (event) => {
 
 **Your Answer:**
 
+This approach is called **event delegation**, where a single **event listener** is attached to a parent element instead of individual child elements. The alternative is adding separate **event listeners** to each `<li>`, which is less efficient and harder to maintain, especially for dynamically added items. **Event delegation** is better because it leverages **event bubbling** and reduces the number of **event listeners**.
+
+The `event.target.closest('li')` method finds the nearest ancestor `<li>` element of whatever was clicked. This is essential because the user may click on a `<p>` inside the `<li>`, and `closest('li')` ensures the correct list item is selected. It allows the handler to work regardless of which child element was clicked.
+
 ## Question 5: NodeList
 
 Do some independent learning and reading about the `querySelectorAll()` method. Then, answer these questions:
@@ -144,3 +153,7 @@ Do some independent learning and reading about the `querySelectorAll()` method. 
 2. What is the difference between a `NodeList` and an array? Why is it important to know this difference?
 
 **Your Answer:**
+
+`querySelector()` `returns` only the first matching element, while `querySelectorAll()` `returns` a `NodeList` of all matching elements. For example, you would use `querySelectorAll('.todo-item')` to select and loop over multiple todo items.
+
+A `NodeList` is array-like but is not a true array, so it does not support all array methods such as `map()` and `filter()`. This is important because you may need to convert a `NodeList` to an array using `Array.from()` if you want to use array functionality.

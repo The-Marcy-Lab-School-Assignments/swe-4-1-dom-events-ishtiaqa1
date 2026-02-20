@@ -32,3 +32,30 @@ const playlists = [
 ];
 
 // Add your code here...
+
+const grid = document.getElementById('playlists-grid');
+const nowplaying = document.getElementById('now-playing-title');
+
+for (let i = 0; i < playlists.length; i++) {
+  const playlist = playlists[i]
+  const li = document.createElement('li');
+  li.dataset.title = playlist.title;
+  const img = document.createElement('img');
+  img.src = playlist.image;
+  img.alt = playlist.description;
+  const p = document.createElement('p');
+  p.textContent = playlist.title;
+  li.appendChild(img);
+  li.appendChild(p);
+  li.classList.add('playlist-card')
+  grid.appendChild(li);
+
+  li.addEventListener('click', () => {
+    document.querySelectorAll('.playlist-card.selected').forEach(card => {
+      card.classList.remove('selected');
+    })
+    li.classList.add('selected');
+    nowplaying.innerHTML = '';
+    nowplaying.textContent = playlist.title
+  })
+}
